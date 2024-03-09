@@ -2,7 +2,7 @@
 export default function Homepage(){
   return (
     <div>
-      Hola
+      prueba daniel
     </div>
   )
 }
