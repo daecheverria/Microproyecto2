@@ -6,6 +6,8 @@ export default function Club(){
     const {id} = useParams()
     console.log(id)
     const clubInfo = useClub(id)
+    console.log(clubInfo)
+    //const clubInfoname = useClub(nombre)
     return (
         <AppLayout>
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
@@ -13,6 +15,7 @@ export default function Club(){
                     <div key={clubInfo.id}>
                         <div>{clubInfo.nombre}</div>
                         <div>{clubInfo.descripcion}</div>
+                        <div>{clubInfo.videojuegos.nombre}</div>
                     </div>
                 ) : (
                     "Cargando..."

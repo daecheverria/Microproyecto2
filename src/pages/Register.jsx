@@ -16,7 +16,8 @@ lastName: "",
 username: "",
 email: "",
 password: "",
-favoriteGame: ""
+favoriteGame: "",
+afiliados: []
 });
 
 const juegazos = useJuegos();
@@ -24,50 +25,19 @@ const navigate = useNavigate()
 const handleSubmit = async(event) => {
 event.preventDefault();
 // Aquí puedes agregar la lógica para enviar los datos del formulario a Firestore
-const { firstName, lastName, username, email, password, favoriteGame } = formData;
+const { firstName, lastName, username, email, password, favoriteGame, afiliados} = formData;
 
 try {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const userId = userCredential.user.uid;
-
-  // Agregar el userId al perfil del usuario en Auth
-  //await updateProfile(auth.currentUser, { userId });
-
-
-  await addDoc(collection(auth, "Auth"), userCredential);
-
-  
-  //   const user = {
-  //     firstName,
-  //     lastName,
-  //     username,
-  //     email,
-  //     favoriteGame
-  //   };
-    
-  //   // Guarda el usuario en Firestore
-  //   addDoc(collection(db, "Users"), user)
-  //     .then(() => {
-  //       console.log("Usuario registrado exitosamente");
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error al registrar el usuario", error);
-  //     });
-
-  //   console.log("Usuario registrado exitosamente");
-  // } catch (error) {
-  //   console.log("Error al registrar el usuario", error);
-  // }
-
-
-Navigate('/app')
 
   const user = {
     firstName,
     lastName,
     username,
     email,
-    favoriteGame
+    favoriteGame,
+    afiliados
   };
   await setDoc(doc(db, "Users", userId), user);
   

@@ -3,6 +3,7 @@ import { useUser } from "../context/User"
 import { useEffect } from "react"
 import { signOut } from "firebase/auth"
 import { auth } from "../firebase"
+import "./Layaout.modules.css";
 
 export default function AppLayout({children}){
     const user = useUser()
@@ -19,9 +20,9 @@ export default function AppLayout({children}){
       }
     
     return(
-        <div>
+        <div className="layaout">
             <nav>
-                <button onClick={cerrarSesion}>Hola</button>
+                <button onClick={cerrarSesion}>Cerrar sesion</button>
             </nav>
             <main>{children}</main>
         </div>
