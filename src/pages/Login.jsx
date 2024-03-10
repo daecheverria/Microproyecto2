@@ -77,7 +77,7 @@ export default function Login() {
   return (
     <div className="container">
       <form className="form" onSubmit={onSubmit}>
-        <div className="formContainer" flex>
+        <div className="formContainer" style={{display:"flex"}}>
           <h1 className="title">Iniciar Sesión</h1>
 
           <div className="input">
