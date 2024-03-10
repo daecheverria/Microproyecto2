@@ -5,11 +5,11 @@ import { useEffect } from "react"
 export default function AppLayout({children}){
     const user = useUser()
     const navigate = useNavigate()
-    // useEffect(()=>{
-    //     if(!user){
-    //         navigate("/login", {replace: true})
-    //     }
-    // }, [user, navigate])
+    useEffect(()=>{
+         if(!user){
+             navigate("/login", {replace: true})
+         }
+     }, [user, navigate])
     return(
         <div>
             <nav>

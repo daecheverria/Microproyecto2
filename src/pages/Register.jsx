@@ -1,10 +1,13 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate} from "react-router-dom";
 import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth"
 
 import { auth, db, googleProvider } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { async } from "@firebase/util";
+import useJuegos from "../hooks/juegos";
+import "./Register.modules.css";
+
 
 function Register() {
 const [formData, setFormData] = useState({
@@ -16,24 +19,7 @@ password: "",
 favoriteGame: ""
 });
 
-const [games, setGames] = useState(["Mortal Kombat"]);
-
-useEffect(() => {
-// Obtiene la lista de videojuegos desde Firestore
-const fetchGames = async () => {
-try {
-const gamesRef = collection(db, "Videojuegos");
-const snapshot = await gamesRef.get();
-const gamesList = snapshot.docs.map((doc) => doc.data().name);
-setGames(gamesList);
-} catch (error) {
-console.log("Error al obtener la lista de videojuegos", error);
-}
-};
-
-fetchGames();
-
-}, []);
+const juegazos = useJuegos();
 
 const handleSubmit = async(event) => {
 event.preventDefault();
@@ -51,6 +37,7 @@ try {
   await addDoc(collection(auth, "Users"), userCredential);
 
   console.log("Usuario registrado exitosamente");
+  Navigate('/app');
 } catch (error) {
   console.log("Error al registrar el usuario", error);
 }
@@ -60,7 +47,6 @@ const user = {
   lastName,
   username,
   email,
-  password,
   favoriteGame
 };
 
@@ -85,53 +71,61 @@ setFormData((prevData) => ({
 
 const handleGoogleClick = async () => {
 await signInWithPopup(auth, googleProvider);
-Navigate('/Homepage');
+Navigate('/app');
 };
 
 return (
-<div>
-<h1>Registro</h1>
-<form onSubmit={handleSubmit}>
-<div>
-<label htmlFor="firstName">Nombre:</label>
-<input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} />
-</div>
-<div>
-<label htmlFor="lastName">Apellido:</label>
-<input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} />
-</div>
-<div>
-<label htmlFor="username">Nombre de usuario:</label>
-<input type="text" id="username" name="username" value={formData.username} onChange={handleChange} />
-</div>
-<div>
-<label htmlFor="email">Correo electrónico:</label>
-<input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
-</div>
-<div>
-<label htmlFor="password">Contraseña:</label>
-<input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
-</div>
-<div>
-<label htmlFor="favoriteGame">Videojuego preferido:</label>
-<select id="favoriteGame" name="favoriteGame" value={formData.favoriteGame} onChange={handleChange} >
-<option value="">Selecciona un videojuego</option>
-{games.map((game) => (
-<option key={game} value={game}>
-{game}
-</option>
-))}
-</select>
-</div>
-<button type="submit">Registrarse</button>
-dust
+    <div className="container">
+      
+    <form className="formR" onSubmit={handleSubmit}>
+      <div className="formContainerR">
+        <h1 className="title">Registro</h1>
+        <div className="input">
+          <label htmlFor="firstName">Nombre:</label>
+          <input type="text" id="firstName" name="firstName" value={formData.firstName} placeholder="Nombre" onChange={handleChange} />
+        </div>
 
-  </form>
-  <button type="button" onClick={handleGoogleClick}>Registrarse con Google</button>
-                <Link to={"/Login"}>
+      <div className="input">
+        <label htmlFor="lastName">Apellido:</label>
+        <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} />
+      </div>
+
+      <div className="input">
+        <label htmlFor="username">Nombre de usuario:</label>
+        <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} />
+      </div>
+
+      <div className="input">
+        <label htmlFor="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
+      </div>
+      
+      <div className="input">
+        <label htmlFor="password">Contraseña:</label>
+        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
+      </div>
+      
+      <div className="input">
+        <label htmlFor="favoriteGame">Videojuego preferido:</label>
+        <select id="favoriteGame" name="favoriteGame" value={formData.favoriteGame} onChange={handleChange} >
+        {juegazos?.map((game) => (
+        <option key={game.ID} value={game.titulo}>
+        {game.titulo}
+        </option>
+        ))}
+        </select>
+      </div>
+
+      <button className="submitBtn" type="submit">Registrarse</button>
+      <button className="googleBtn" type="button" onClick={handleGoogleClick}>Registrarse con Google</button>
+      <Link className="redirect" to={"/Login"}>
                 ¿Ya tines una cuenta? {" "}
-                    <span>Iniciar Sesión</span>
+                    <span className="txt">Iniciar Sesión</span>
                 </Link>
+      </div>
+  </form>
+  
+               
 </div>
 
 );
