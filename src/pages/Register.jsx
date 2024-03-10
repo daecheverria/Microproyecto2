@@ -1,9 +1,9 @@
-import { Link, Navigate} from "react-router-dom";
+import { Link, Navigate, useNavigate} from "react-router-dom";
 import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth"
 
 import { auth, db, googleProvider } from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { async } from "@firebase/util";
 import useJuegos from "../hooks/juegos";
 import "./Register.modules.css";
@@ -20,7 +20,7 @@ favoriteGame: ""
 });
 
 const juegazos = useJuegos();
-
+const navigate = useNavigate()
 const handleSubmit = async(event) => {
 event.preventDefault();
 // Aquí puedes agregar la lógica para enviar los datos del formulario a Firestore
@@ -30,35 +30,21 @@ try {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const userId = userCredential.user.uid;
 
-  // Agregar el userId al perfil del usuario en Auth
-  //await updateProfile(auth.currentUser, { userId });
-
-
-  await addDoc(collection(auth, "Users"), userCredential);
-
-  console.log("Usuario registrado exitosamente");
-  Navigate('/app');
+  const user = {
+    firstName,
+    lastName,
+    username,
+    email,
+    favoriteGame
+  };
+  await setDoc(doc(db, "Users", userId), user);
+  
+  console.log("Usuario registrado exitosamente en auth y Firestore");
+  
+  navigate("/app", {replace: true})
 } catch (error) {
-  console.log("Error al registrar el usuario", error);
+  console.log("Error al registrar el usuario en auth y Firestore", error);
 }
-
-const user = {
-  firstName,
-  lastName,
-  username,
-  email,
-  favoriteGame
-};
-
-// Guarda el usuario en Firestore
-addDoc(collection(db, "Users"), user)
-  .then(() => {
-    console.log("Usuario registrado exitosamente");
-  })
-  .catch((error) => {
-    console.log("Error al registrar el usuario", error);
-  });
-
 };
 
 const handleChange = (event) => {
