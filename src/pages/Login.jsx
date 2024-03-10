@@ -2,9 +2,7 @@ import { collection, doc, setDoc } from "firebase/firestore"
 import { auth, db, googleProvider, loginWithEmailAndPassword } from "../firebase"
 import {getAdditionalUserInfo, onAuthStateChanged, signInWithPopup, signOut} from "firebase/auth"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 //import { useState } from "react";
 export default function Login(){
@@ -16,7 +14,7 @@ export default function Login(){
 });
 
 const onSuccess = () => {
-    navigate("./pages/Homepage");
+    navigate("/Homepage");
 };
 
 const onFail = (_error) => {
@@ -29,7 +27,7 @@ const onSubmit = async (event) => {
     await loginWithEmailAndPassword({ userData: formData, onSuccess, onFail });  
 };
 
-const onChange2 = (event) => {
+const onChange = (event) => {
     const { name, value } = event.target;
 
     setFormData((oldData) => ({ ...oldData, [name]: value }));
@@ -74,19 +72,19 @@ const onChange2 = (event) => {
             
                     <div >
                         <label htmlFor="email"><span>Ingrese su correo</span></label>
-                        <input type="email" name="email" id="email" placeholder="correo@email.com" onChange={onChange2}/>
+                        <input type="email" name="email" id="email" placeholder="correo@email.com" onChange={onChange}/>
                     </div>
             
                     <div>
                         <label htmlFor="password"><span>Ingrese su contraseña</span></label>
-                        <input type="password" name="password" id="password" placeholder="********" onChange={onChange2}/>
+                        <input type="password" name="password" id="password" placeholder="********" onChange={onChange}/>
                     </div>
 
                     <button type="submit" >Iniciar Sesión</button>
                     
                     <button type="button" onClick={handleClick}>Inciar Sesión con Google</button>
 
-                    <Link to={"/pages/Register"} >
+                    <Link to={"/Register"} >
                     ¿Aún no tines una cuenta? {" "}
                         <span >Regístrate</span>
                     </Link>

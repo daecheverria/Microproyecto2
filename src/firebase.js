@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 
@@ -40,6 +40,39 @@ export const loginWithEmailAndPassword = async ({
   } catch (error) {
       console.error("LOGIN FAILED", { error });
 
+      if (onFail) {
+          onFail();
+      }
+  }
+};
+
+export const registerWithEmailAndPassword = async ({
+  userData,
+  onSuccess,
+  onFail,
+}) => {
+  try {
+      const { email, password, ...restdata } = userData;
+      const firebaseResult = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+      );
+  
+      const data = {
+          uid: firebaseResult.user.uid,
+          email: email,
+          displayName: restData.displayName,
+          name: restData.displayName,
+      }
+      
+
+      if (onSuccess) {
+          console.log("firebaseResult", firebaseResult)
+          onSuccess();
+      }
+  } catch (error) {
+      console.error("REGISTER FAILED", { error });
       if (onFail) {
           onFail();
       }
