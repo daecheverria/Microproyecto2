@@ -5,6 +5,37 @@ import { useEffect, useState } from "react"
 
 //import { useState } from "react";
 export default function Login(){
+<<<<<<< Updated upstream
+=======
+  const navigate = useNavigate;
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+});
+
+const onSuccess = () => {
+    navigate("/Homepage");
+};
+
+const onFail = (_error) => {
+    console.log("LOGIN FAILED, Try Again");
+    alert("se produjo un error al iniciar sesión");
+};
+
+const onSubmit = async (event) => {
+    event.preventDefault();
+    await loginWithEmailAndPassword({ userData: formData, onSuccess, onFail });  
+};
+
+const onChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((oldData) => ({ ...oldData, [name]: value }));
+};
+
+
+>>>>>>> Stashed changes
   const [user,setUser] = useState(null);
   async function handleClick(){
     
@@ -36,12 +67,48 @@ export default function Login(){
 
   return (
     <div>
+<<<<<<< Updated upstream
       <button onClick={handleClick}>
       Iniciar con google!
       </button>
       <button onClick={cerrarSesion}>
       cerrar sesion
       </button>
+=======
+
+      <form onSubmit={onSubmit}>
+        <div>       
+                    <h1 >Iniciar Sesión</h1>
+            
+                    <div >
+                        <label htmlFor="email"><span>Ingrese su correo</span></label>
+                        <input type="email" name="email" id="email" placeholder="correo@email.com" onChange={onChange}/>
+                    </div>
+            
+                    <div>
+                        <label htmlFor="password"><span>Ingrese su contraseña</span></label>
+                        <input type="password" name="password" id="password" placeholder="********" onChange={onChange}/>
+                    </div>
+
+                    <button type="submit" >Iniciar Sesión</button>
+                    
+                    <button type="button" onClick={handleClick}>Inciar Sesión con Google</button>
+
+                    <Link to={"/Register"} >
+                    ¿Aún no tines una cuenta? {" "}
+                        <span >Regístrate</span>
+                    </Link>
+
+                    
+                </div>
+                <button onClick={cerrarSesion}>
+                    cerrar sesion
+                </button>
+            </form>
+
+
+      
+>>>>>>> Stashed changes
     </div>
   )
   }
