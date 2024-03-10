@@ -1,4 +1,4 @@
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db, googleProvider, loginWithEmailAndPassword } from "../firebase";
@@ -7,7 +7,9 @@ import "./Login.modules.css";
 //import styles from "./Login.modules.css";
 
 export default function Login() {
+
   const navigate = useNavigate();
+  
 
   const [formData, setFormData] = useState({
     email: "",
@@ -33,9 +35,10 @@ export default function Login() {
     setFormData((oldData) => ({ ...oldData, [name]: value }));
   };
 
-  const [user, setUser] = useState(null);
+  
 
   async function handleClick() {
+    //const [user, setUser] = useState(null)
     //const result = await signInWithPopup(auth, googleProvider);
     //const coleccionUsuario = collection(db, "Users");
     //const infoRelativaU = await getAdditionalUserInfo(result);
@@ -50,10 +53,25 @@ export default function Login() {
     // console.log("LOGIN FAILED, Try Again");
     // }
 
+    
+
       try {
         const result = await signInWithPopup(auth, googleProvider);
-        console.log("Usuario autenticado:", result.user.displayName);
-        // Aquí puedes realizar otras acciones después de la autenticación
+        const coleccionUsuario = collection(db, "Users");
+        const querySnapshot = await getDocs(coleccionUsuario);
+        const users = querySnapshot.docs.map((doc) => doc.data());
+        const currentUser = users.find((user) => user.email === result.user.email);
+        if (currentUser) {
+          console.log("Inicio de sesión exitoso:", currentUser.name);
+          console.log("Usuario autenticado:", result.user.displayName);
+          const [user, setUser] = useState(currentUser);
+          setUser(currentUser);
+          const navigate = useNavigate()
+          
+          // Aquí puedes realizar acciones después de iniciar sesión exitosamente
+        } else {
+          console.log("Usuario no encontrado. Inicia sesión con un usuario válido.");}
+ 
       } catch (error) {
         console.error("Error al iniciar sesión:", error);
       }
@@ -77,7 +95,7 @@ export default function Login() {
   return (
     <div className="container">
       <form className="form" onSubmit={onSubmit}>
-        <div className="formContainer" flex>
+        <div className="formContainer">
           <h1 className="title">Iniciar Sesión</h1>
 
           <div className="input">

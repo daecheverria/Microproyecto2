@@ -34,31 +34,33 @@ try {
   //await updateProfile(auth.currentUser, { userId });
 
 
-  await addDoc(collection(auth, "Users"), userCredential);
+  await addDoc(collection(auth, "Auth"), userCredential);
+
+  
+  const user = {
+    firstName,
+    lastName,
+    username,
+    email,
+    favoriteGame
+  };
+  
+  // Guarda el usuario en Firestore
+  addDoc(collection(db, "Users"), user)
+    .then(() => {
+      console.log("Usuario registrado exitosamente");
+    })
+    .catch((error) => {
+      console.log("Error al registrar el usuario", error);
+    });
 
   console.log("Usuario registrado exitosamente");
-  Navigate('/app');
 } catch (error) {
   console.log("Error al registrar el usuario", error);
 }
 
-const user = {
-  firstName,
-  lastName,
-  username,
-  email,
-  favoriteGame
-};
 
-// Guarda el usuario en Firestore
-addDoc(collection(db, "Users"), user)
-  .then(() => {
-    console.log("Usuario registrado exitosamente");
-  })
-  .catch((error) => {
-    console.log("Error al registrar el usuario", error);
-  });
-
+Navigate('/app')
 };
 
 const handleChange = (event) => {
