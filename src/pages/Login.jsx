@@ -1,12 +1,11 @@
 import { collection, doc, setDoc } from "firebase/firestore"
-import { auth, db, googleProvider } from "../firebase"
+import { auth, db, googleProvider, loginWithEmailAndPassword } from "../firebase"
 import {getAdditionalUserInfo, onAuthStateChanged, signInWithPopup, signOut} from "firebase/auth"
 import { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom";
 
 //import { useState } from "react";
 export default function Login(){
-<<<<<<< Updated upstream
-=======
   const navigate = useNavigate;
 
   const [formData, setFormData] = useState({
@@ -35,7 +34,6 @@ const onChange = (event) => {
 };
 
 
->>>>>>> Stashed changes
   const [user,setUser] = useState(null);
   async function handleClick(){
     
@@ -67,14 +65,6 @@ const onChange = (event) => {
 
   return (
     <div>
-<<<<<<< Updated upstream
-      <button onClick={handleClick}>
-      Iniciar con google!
-      </button>
-      <button onClick={cerrarSesion}>
-      cerrar sesion
-      </button>
-=======
 
       <form onSubmit={onSubmit}>
         <div>       
@@ -108,7 +98,6 @@ const onChange = (event) => {
 
 
       
->>>>>>> Stashed changes
     </div>
   )
   }
