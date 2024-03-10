@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword} from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,3 +24,24 @@ export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope("profile");
 googleProvider.addScope("email"); 
+
+export const loginWithEmailAndPassword = async ({
+  userData,
+  onSuccess,
+  onFail,
+}) => {
+  try {
+      const { email, password } = userData;
+      await signInWithEmailAndPassword(auth, email, password);
+
+      if (onSuccess) {
+          onSuccess();
+      }
+  } catch (error) {
+      console.error("LOGIN FAILED", { error });
+
+      if (onFail) {
+          onFail();
+      }
+  }
+};
