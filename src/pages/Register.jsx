@@ -7,9 +7,16 @@ import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { async } from "@firebase/util";
 import {useJuegos} from "../hooks/juegos";
 import "./Register.modules.css";
+import { useUserContext } from "../context/User";
 
 
 function Register() {
+  
+const navigate = useNavigate()
+  const { user } = useUserContext();
+  if (user) {
+    navigate("/app")
+  }
 const [formData, setFormData] = useState({
 firstName: "",
 lastName: "",
@@ -21,7 +28,6 @@ afiliados: []
 });
 
 const juegazos = useJuegos();
-const navigate = useNavigate()
 const handleSubmit = async(event) => {
 event.preventDefault();
 // Aquí puedes agregar la lógica para enviar los datos del formulario a Firestore

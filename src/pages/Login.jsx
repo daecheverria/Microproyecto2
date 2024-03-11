@@ -4,13 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, db, googleProvider, loginWithEmailAndPassword } from "../firebase";
 import { getAdditionalUserInfo, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import "./Login.modules.css";
+import { useUserContext } from "../context/User";
 //import styles from "./Login.modules.css";
 
 export default function Login() {
-
-  const navigate = useNavigate();
   
-
+  const navigate = useNavigate();
+  const { user } = useUserContext();
+  if (user) {
+    navigate("/app")
+  }
   const [formData, setFormData] = useState({
     email: "",
     password: "",
