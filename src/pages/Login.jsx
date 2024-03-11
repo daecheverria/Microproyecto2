@@ -78,19 +78,19 @@ export default function Login() {
     
   }
 
-  async function cerrarSesion() {
-    await signOut(auth);
-    setUser(null);
-  }
+  // async function cerrarSesion() {
+  //   await signOut(auth);
+  //   setUser(null);
+  // }
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     setUser(user);
+  //   });
 
-    // Devuelve una función de limpieza para cancelar la suscripción al cambiar de componente o desmontar
-    return () => unsubscribe();
-  }, []);
+  //   Devuelve una función de limpieza para cancelar la suscripción al cambiar de componente o desmontar
+  //   return () => unsubscribe();
+  // }, []);
 
   return (
     <div className="container">
@@ -121,7 +121,7 @@ export default function Login() {
           <Link className="redirect" to={"/Register"}>
             ¿Aún no tienes una cuenta? <span>Regístrate</span>
           </Link>
-          <button onClick={cerrarSesion}>Cerrar sesión</button>
+          {/* <button onClick={cerrarSesion}>Cerrar sesión</button> */}
         </div>
         
       </form>

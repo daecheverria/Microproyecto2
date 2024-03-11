@@ -1,27 +1,15 @@
-import { Link, useNavigate } from "react-router-dom"
-import { useUser } from "../context/User"
-import { useEffect } from "react"
+import { Link,  } from "react-router-dom"
 import { signOut } from "firebase/auth"
 import { auth } from "../firebase"
 import "./Layaout.modules.css";
-import { getUserData } from "../controllers/user"
+import { useUserContext } from "../context/User";
 
 export default function AppLayout({children}){
-    const user = useUser()
-    console.log({user})
-    const  userData =  getUserData(user.uid);
-    console.log(userData, user.uid, "hola")
-    // const navigate = useNavigate()
-    // useEffect(()=>{
-    //      if(!user){
-    //          navigate("/login", {replace: true})
-    //      }
-    //  }, [user, navigate])
-
     async function cerrarSesion() {
         await signOut(auth);
       }
-    
+    const {userbd} = useUserContext()
+    console.log(userbd.lastName.stringValue)
     return(
         <div className="layaout">
             <nav>

@@ -12,6 +12,5 @@ export async function getJuego(id){
     const juegoCollection = doc(db,"Videojuegos",id)
     const juegoDocs = await getDoc(juegoCollection)
     const juego = juegoDocs.data()
-    console.log(juego)
     return juego
 }
