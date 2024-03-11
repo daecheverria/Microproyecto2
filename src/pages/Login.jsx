@@ -4,13 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, db, googleProvider, loginWithEmailAndPassword } from "../firebase";
 import { getAdditionalUserInfo, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import "./Login.modules.css";
+import { useUserContext } from "../context/User";
 //import styles from "./Login.modules.css";
 
 export default function Login() {
-
-  const navigate = useNavigate();
   
-
+  const navigate = useNavigate();
+  const { user } = useUserContext();
+  if (user) {
+    navigate("/app")
+  }
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -109,7 +112,7 @@ export default function Login() {
             <label htmlFor="password">
               <span>Ingrese su contraseña</span>
             </label>
-            <input type="password" name="password" id="password" placeholder="****" onChange={onChange} />
+            <input type="password" name="password" id="password" placeholder="**" onChange={onChange} />
           </div>
 
           <button className="submitBtn" type="submit">Iniciar Sesión</button>
