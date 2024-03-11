@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs } from "@firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where } from "@firebase/firestore";
 import { db } from "../firebase";
 
 export async function getJuegos(){
@@ -14,3 +14,22 @@ export async function getJuego(id){
     const juego = juegoDocs.data()
     return juego
 }
+
+export async function getJuegoByName(nombre) {
+    const videojuegosRef = collection(db, "Videojuegos");
+    const q = query(videojuegosRef, where("titulo", "==", nombre));
+  
+    try {
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) {
+        console.log("No se encontró ningún juego con ese nombre.");
+        return null;
+      }
+  
+      const juego = querySnapshot.docs[0].data();
+      return juego;
+    } catch (error) {
+      console.error("Error al obtener el juego:", error);
+      return null;
+    }
+  }

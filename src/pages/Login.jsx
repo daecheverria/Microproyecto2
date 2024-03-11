@@ -12,8 +12,6 @@ export default function Login() {
   const { user} = useUserContext();
   if (user && (user !== undefined)) {
     navigate("/app")
-  } else {
-    navigate("/Login")
   }
 
   const [formData, setFormData] = useState({

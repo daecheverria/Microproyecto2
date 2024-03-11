@@ -21,7 +21,7 @@
 
     .buttoncontainer{
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
     }
   
   .form {
@@ -99,7 +99,7 @@
     display: block;
     outline: none;
     border: none;
-    width: 40%;
+    width: auto;
     height: 44px;
     background: linear-gradient(45deg, rgb(11, 137, 234), rgb(34, 34, 121));
     box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
@@ -109,11 +109,15 @@
     line-height: 24px;
     color: #ffffff;
     cursor: pointer;
-    margin-bottom: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+    
   }
+  .buttonlink{
+    margin-right: 50px;
+  }
+
   
   .botonver:hover{
     background: linear-gradient(45deg, rgb(162, 26, 183), rgb(149, 172, 189));

@@ -13,9 +13,9 @@ export default function AppLayout({ children }) {
   if (!user || user === undefined || user === null) {
     navigate("/Login")
   }
-    return (
+    return ((
         <div className="layaout">
-            <nav>
+            <nav style={{display:"flex",justifyContent:"space-between"}}>
                 <Link to="/login">
                     <button onClick={cerrarSesion}>Cerrar sesion</button>
                 </Link>
@@ -25,9 +25,16 @@ export default function AppLayout({ children }) {
                 <Link to="/app">
                     <button >Inicio</button>
                 </Link>
+                <div className="search-bar">
+                    <input type="text" placeholder="Buscar"/>
+                    <button type="submit">Buscar</button>
+                </div>
+                
+
 
             </nav>
             <main>{children}</main>
         </div>
-    )
+    ))
+
 }

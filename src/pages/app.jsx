@@ -18,7 +18,7 @@ export default function App(){
                 <button className="">
                     Suscribir
                 </button >
-                <Link to={`/app/clubes/${club.ID}`}>
+                <Link className="buttonlink" to={`/app/clubes/${club.ID}`}>
                 <button className="botonver">
                     Ver
                 </button></Link>
