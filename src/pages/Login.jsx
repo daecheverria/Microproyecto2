@@ -5,15 +5,17 @@ import { auth, db, googleProvider, loginWithEmailAndPassword } from "../firebase
 import { getAdditionalUserInfo, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import "./Login.modules.css";
 import { useUserContext } from "../context/User";
-//import styles from "./Login.modules.css";
 
 export default function Login() {
   
   const navigate = useNavigate();
-  const { user } = useUserContext();
-  if (user) {
+  const { user} = useUserContext();
+  if (user && (user !== undefined)) {
     navigate("/app")
+  } else {
+    navigate("/Login")
   }
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -57,28 +59,25 @@ export default function Login() {
     // }
 
     
-
-      try {
+    
         const result = await signInWithPopup(auth, googleProvider);
         const coleccionUsuario = collection(db, "Users");
         const querySnapshot = await getDocs(coleccionUsuario);
-        const users = querySnapshot.docs.map((doc) => doc.data());
-        const currentUser = users.find((user) => user.email === result.user.email);
-        if (currentUser) {
-          console.log("Inicio de sesión exitoso:", currentUser.name);
+        const userss = await querySnapshot.docs.map((doc) => doc.data());
+        const currentUser2 = await userss.find((user) => user.email === result.user.email);
+        if (await currentUser2) {
+          console.log("Inicio de sesión exitoso:", currentUser2.name);
           console.log("Usuario autenticado:", result.user.displayName);
-          const [user, setUser] = useState(currentUser);
-          setUser(currentUser);
-          const navigate = useNavigate()
+          const [user, setUser] =  useState(currentUser2);
+          //setUser(currentUser);
+          //const navigate = useNavigate()
           
           // Aquí puedes realizar acciones después de iniciar sesión exitosamente
-        } else {
-          console.log("Usuario no encontrado. Inicia sesión con un usuario válido.");}
- 
-      } catch (error) {
-        console.error("Error al iniciar sesión:", error);
-      }
-    
+        }else{
+          await signOut(auth)
+          alert("Usuario No esta en la base de datos, por favor registrese")
+        }
+        
   }
 
   // async function cerrarSesion() {

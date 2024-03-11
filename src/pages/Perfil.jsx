@@ -12,6 +12,7 @@ export default function Perfil() {
 
   const [firstName, setFirstName] = useState(userData?.firstName || "");
   const [lastName, setLastName] = useState(userData?.lastName || "");
+  const [favoriteGame, setFavoriteGame] = useState(userData?.favoriteGame || "");
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
@@ -21,12 +22,17 @@ export default function Perfil() {
     setLastName(e.target.value);
   };
 
+  const handleLastFavoriteGame = (e) => {
+    setFavoriteGame(e.target.value);
+  };
+
   const handleSaveChanges = async () => {
     try {
       const userRef = doc(db, "Users", user.uid);
       await updateDoc(userRef, {
         firstName,
         lastName,
+        favoriteGame
       });
       console.log("Datos actualizados correctamente.");
     } catch (error) {
@@ -53,7 +59,7 @@ export default function Perfil() {
 
               <div className="input">
                 <label htmlFor="favoriteGame">Videojuego preferido:</label>
-                <select id="favoriteGame" name="favoriteGame" value={userData.favoriteGame} placeholder={userData.favoriteGame} onChange="">
+                <select id="favoriteGame" name="favoriteGame" value={favoriteGame} placeholder={userData.favoriteGame} onChange={handleLastFavoriteGame}>
                   {juegazos?.map((game) => (
                     <option key={game.ID} value={game.titulo}>
                       {game.titulo}

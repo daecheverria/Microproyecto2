@@ -1,6 +1,6 @@
 import { Link, Navigate, useNavigate} from "react-router-dom";
 import { useState, useEffect } from "react";
-import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth"
+import { createUserWithEmailAndPassword, getAdditionalUserInfo, signInWithPopup, signOut, updateProfile } from "firebase/auth"
 
 import { auth, db, googleProvider } from "../firebase";
 import { collection, addDoc, setDoc, doc } from "firebase/firestore";
@@ -64,8 +64,42 @@ setFormData((prevData) => ({
 };
 
 const handleGoogleClick = async () => {
-await signInWithPopup(auth, googleProvider);
-Navigate('/app');
+//await signInWithPopup(auth, googleProvider);
+//Navigate('/app');
+
+   // const [user, setUser] = useState(null)
+    const result = await signInWithPopup(auth, googleProvider);
+    const coleccionUsuario = collection(db, "Users");
+    const infoRelativaU = await getAdditionalUserInfo(result);
+
+    if (infoRelativaU.isNewUser) {
+
+      const fullName = result.user.displayName;
+      const namesArray = fullName.split(' ');
+
+      const firstName2 = namesArray[0];
+      const lastName2 = namesArray.slice(1).join(' ');
+
+      const email = result.user.email;
+      const emailArray = email.split('@');
+
+      const username2 = emailArray[0];
+
+      await setDoc(doc(coleccionUsuario, result.user.email), {
+        afiliados: [],
+        email: result.user.email,
+        favoriteGame: "",
+        firstName: firstName2,
+        lastName: lastName2,
+        username: username2,
+        picture: result.user.photoURL
+      });
+      const [user, setUser] =  useState(result.user);
+    } else{
+      await signOut(auth)
+    console.log("LOGIN FAILED, Try Again usuario registrado previamente");
+    }
+
 };
 
 return (

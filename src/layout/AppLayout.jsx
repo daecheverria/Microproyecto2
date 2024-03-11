@@ -9,9 +9,9 @@ export default function AppLayout({ children }) {
         await signOut(auth);
     }
     const navigate = useNavigate();
-    const { user } = useUserContext();
-  if (!user) {
-    navigate("/login")
+    const  { user } = useUserContext();
+  if (!user || user === undefined || user === null) {
+    navigate("/Login")
   }
     return (
         <div className="layaout">
