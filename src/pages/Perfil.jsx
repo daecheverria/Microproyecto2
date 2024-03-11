@@ -13,6 +13,15 @@ export default function Perfil() {
   const [firstName, setFirstName] = useState(userData?.firstName || "");
   const [lastName, setLastName] = useState(userData?.lastName || "");
   const [favoriteGame, setFavoriteGame] = useState(userData?.favoriteGame || "");
+  useEffect(() => {
+    if (userData) {
+      setFirstName(userData.firstName || "");
+      setLastName(userData.lastName || "");
+      setFavoriteGame(userData.favoriteGame || "");
+    }
+  }, [userData]);
+
+
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
