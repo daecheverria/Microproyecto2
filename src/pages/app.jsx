@@ -15,14 +15,19 @@ export default function App(){
   const [afiliados, setClubes] = useState(userData?.afiliados || "");
   console.log(firstName,afiliados)
 
-    const handleSubscription = (clubID) => {
-        if (afiliados.includes(clubID)) {
-          setClubes(afiliados.filter((id) => id !== clubID));
-        } else {
-          setClubes([...afiliados, clubID]);
-        }
-        handleSaveChanges()
-      };
+  const handleSubscription = (clubID) => {
+    if (afiliados.includes(clubID)) {
+        setClubes(prevAfiliados => prevAfiliados.filter(id => id !== clubID));
+    } else {
+        setClubes(prevAfiliados => [...prevAfiliados, clubID]);
+    }
+};
+
+useEffect(() => {
+    handleSaveChanges();
+}, [afiliados]);
+
+
       useEffect(() => {
         if (userData) {
           setClubes(userData.afiliados || "");
@@ -30,6 +35,7 @@ export default function App(){
       }, [userData]);
 
       const handleSaveChanges = async () => {
+        console.log(afiliados,"hola")
         try {
           const userRef = doc(db, "Users", user.uid);
           await updateDoc(userRef, {
