@@ -1,49 +1,44 @@
-import { onAuthStateChanged } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
-import { getUserById } from "./userss";
-
-
+import { useAuthState } from 'react-firebase-hooks/auth'; 
+import { auth, db } from "../firebase";
+import { doc, getDoc } from "@firebase/firestore";
 export const UserContext = React.createContext();
 
 export function UserContextProvider({ children }) {
-    const [user, setUser] = useState(null);
-    const [name, setName] = useState(null);
-    const [userbd, setUserbd] = useState(null);
-    const [isLoadingUser, setIsLoadingUser] = useState(false);
+    const [user, loading] = useAuthState(auth); 
+
+    const [userData, setUserData] = useState(null);
+    const [isLoadingUserData, setIsLoadingUserData] = useState(false);
 
     useEffect(() => {
-        onAuthStateChanged(auth, async (firebaseUser) => {
-            setIsLoadingUser(true);
-            if (firebaseUser) {
-                setUser(firebaseUser);
-                const user = await getUserById(firebaseUser.uid);
-                console.log(firebaseUser, "hola");
-                if (!firebaseUser.emailVerified) {
-
-                    setUserbd(user._document.data.value.mapValue.fields);
-                   
-                    setName(user._document.data.value.mapValue.fields.firstName.stringValue);
-                    console.log(user._document.data.value.mapValue.fields.firstName.stringValue);
+        const fetchUserData = async () => {
+            if (user) {
+                setIsLoadingUserData(true);
+                try {
+                    const userRef = doc(db, "Users", user.uid);
+                    const userDoc = await getDoc(userRef);
+                    if (userDoc.exists) {
+                        setUserData(userDoc.data());
+                    } else {
+                        console.log("No se encontraron datos para el usuario en Firestore.");
+                    }
+                } catch (error) {
+                    console.error("Error al obtener datos del usuario:", error);
                 }
-
-            } else {
-                setUser(null);
+                setIsLoadingUserData(false);
             }
-            setIsLoadingUser(false);
-        });
-    }, []);
-    console.log(user)
-    console.log(userbd, "jola")
+        };
+
+        fetchUserData();
+    }, [user]);
+    console.log(userData,"hola")
     return (
         <UserContext.Provider
             value={{
                 user,
-                name,
-                setUser,
-                isLoadingUser,
-                setIsLoadingUser,
-                userbd
+                userData,
+                loading,
+                isLoadingUserData,
             }}
         >
             {children}

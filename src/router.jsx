@@ -4,7 +4,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import App from "./pages/app";
 import Club from "./pages/Club";
-//import Perfil from "./pages/Perfil";
+import Perfil from "./pages/Perfil";
 
 export const router = createBrowserRouter([
     {
@@ -28,9 +28,9 @@ export const router = createBrowserRouter([
         element: <Club />,
     }
     ,
-    // {
-    //     path: "/app/perfil",
-    //     element: <Perfil />,
-    // }
+    {
+        path: "/app/perfil",
+        element: <Perfil />,
+    }
 ]
 )
