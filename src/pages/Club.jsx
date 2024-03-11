@@ -9,9 +9,10 @@ export default function Club() {
 
     return (
         <div className="container">
+             {clubInfo ? (
             <AppLayout>
             <div style={{display:"flex", flexDirection: "column", gap:20, textAlign:"center" ,backgroundColor:"violet"}}>
-                {clubInfo ? (
+               
                     <div key={clubInfo.id}>
                         <div className="tituloclub">{clubInfo.nombre}</div>
                         <div className="infoclub">{clubInfo.descripcion}</div>
@@ -21,16 +22,17 @@ export default function Club() {
                                     <div className="titulogame">{juego.titulo}</div>
                                     <div className="descripcion">{juego.descripcion}</div>
                                     <div className="genero">Género: {juego.genero}</div>
-                                    <img src={juego.foto} alt={juego.titulo} />
+                                    <img className="img" src={juego.foto} alt={juego.titulo} />
                                 </div>
                             ))}
                         </div>
                     </div>
+                    </div>
+            </AppLayout>
                 ) : (
                     "Cargando..."
                 )}
-            </div>
-        </AppLayout>
+           
         </div>
         
     );

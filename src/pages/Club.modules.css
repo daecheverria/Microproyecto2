@@ -2,7 +2,6 @@
     width: auto;
     height: auto;
     border: solid black 5px;
-    margin: 10px;
     justify-content: center;
     margin: 10px 150px 10px 150px;
 }
@@ -11,7 +10,7 @@
 }
 
 .container {
-    background: #0D1117;
+    background: #7339b2;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -79,4 +78,8 @@
     text-align: center;
     text-transform: uppercase;
     /* Estilos de fondo según el género */
+  }
+
+  .imgS{
+    transform: scale(0.7);
   }

@@ -42,9 +42,10 @@ export default function Perfil() {
 
   return (
     <div className="container">
+      {userData ? (
       <AppLayout>
         <div style={{ display: "flex", flexDirection: "column", gap: 20, textAlign: "center", backgroundColor: "violet", width: "auto",height:"auto" }}>
-          {userData ? (
+          
             <div className="formContainerR">
               <h1 className="title">PERFIL</h1>
               <div className="input">
@@ -70,11 +71,11 @@ export default function Perfil() {
 
               <button onClick={handleSaveChanges}>Guardar Cambios</button>
             </div>
-          ) : (
+            </div>
+      </AppLayout>) : (
             "Cargando..."
           )}
-        </div>
-      </AppLayout>
+        
     </div>
   );
 }

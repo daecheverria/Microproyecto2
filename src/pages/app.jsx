@@ -7,10 +7,11 @@ export default function App(){
     const clubes = useClubes()
     return (
     <div   className="containerapp">
+        {clubes?(
         <AppLayout>
             <div style={{display:"flex", flexDirection: "column", gap:20, textAlign:"center" ,backgroundColor:"violet" , width: "auto", height:"auto"}}>
-            {clubes?(
-                clubes?.map(club=>
+            
+                {clubes?.map(club=>
             <div className="clubes" key={club.ID} >
                 <div>{club.nombre}</div>
                 <div>{club.descripcion}</div>
@@ -22,12 +23,15 @@ export default function App(){
                 <button className="botonver">
                     Ver
                 </button></Link>
+
                 
                 </div>
-            </div>)):(
-                "Cargando..."
-            )}
+            </div>)}
             </div>
         </AppLayout>
+            ):(
+                "Cargando..."
+            )}
+            
     </div>)
 }

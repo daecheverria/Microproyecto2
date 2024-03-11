@@ -1,5 +1,6 @@
 .layaout {
     background: purple;
+    height: auto;
   }
   
   .search-bar input[type="text"] {
