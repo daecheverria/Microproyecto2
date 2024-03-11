@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getJuego, getJuegos } from "../controllers/juego"
+import { getJuego, getJuegoByName, getJuegos } from "../controllers/juego"
 
 export function useJuegos(){
     const [juegos, setJuego] = useState(null)
@@ -19,10 +19,23 @@ export function useJuego(id){
     useEffect(()=>{
         const load = async()=>{
             const data = await getJuego(id)
-            console.log(getJuego(id))
             setJuego(data)
         }
         load()
     }, [id])
+    return juego
+}
+
+
+export function useJuegoByName(nombre){
+    const [juego, setJuego] = useState(null)
+
+    useEffect(()=>{
+        const load = async()=>{
+            const data = await getJuegoByName (nombre)
+            setJuego(data)
+        }
+        load()
+    }, [nombre])
     return juego
 }

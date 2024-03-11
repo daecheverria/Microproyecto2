@@ -27,11 +27,10 @@ export default function AppLayout({ children }) {
                 </Link>
                 <div className="search-bar">
                     <input type="text" placeholder="Buscar"/>
-                    <button type="submit">Buscar</button>
+                    <Link to={`/app/search/${user}`}><button type="submit">Buscar</button></Link>
+                    
                 </div>
                 
-
-
             </nav>
             <main>{children}</main>
         </div>
