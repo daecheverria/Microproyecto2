@@ -1,4 +1,4 @@
-import { collection, getDocs } from "@firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "@firebase/firestore";
 import { db } from "../firebase";
 
 export async function getJuegos(){
@@ -9,8 +9,9 @@ export async function getJuegos(){
 }
 
 export async function getJuego(id){
-    const juegoCollection = collection(db,"Videojuegos")
-    const juegoDocs = await getDocs(juegoCollection, id)
+    const juegoCollection = doc(db,"Videojuegos",id)
+    const juegoDocs = await getDoc(juegoCollection)
     const juego = juegoDocs.data()
+    console.log(juego)
     return juego
 }

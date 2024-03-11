@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getJuego, getJuegos } from "../controllers/juego"
 
-export default function useJuegos(){
+export function useJuegos(){
     const [juegos, setJuego] = useState(null)
 
     useEffect(()=>{

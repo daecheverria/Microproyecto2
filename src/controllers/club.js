@@ -1,17 +1,28 @@
 import { collection, doc, getDoc, getDocs } from "@firebase/firestore";
 import { db } from "../firebase";
+import { getJuego } from "./juego";
 
 export async function getClubes(){
     const clubCollection = collection(db,"Clubes")
     const clubDocs = await getDocs(clubCollection)
-    const club = clubDocs.docs.map((doc)=>doc.data())
-    return club
+    const clubs = await Promise.all(clubDocs.docs.map(async (doc) => {
+        const clubData = doc.data();
+        // Mapear los IDs de videojuegos y obtener los objetos completos
+        const videojuegosCompletos = await Promise.all(clubData.videojuegos.map(async (id) => {
+            return await getJuego(id);
+        }));
+        clubData.videojuegos = videojuegosCompletos;
+        return clubData;
+    }));
+    return clubs;
 }
 
-export async function getClub(id){
-    const clubCollection = doc(db,"Clubes",id)
-    const clubDocs = await getDoc(clubCollection)
-    const club = clubDocs.data()
-    console.log(club)
-    return club
+export async function getClub(id) {
+    const clubDoc = doc(db, "Clubes", id);
+    const clubData = (await getDoc(clubDoc)).data();
+    const videojuegosCompletos = await Promise.all(clubData.videojuegos.map(async (id) => {
+        return await getJuego(id);
+    }));
+    clubData.videojuegos = videojuegosCompletos;
+    return clubData;
 }

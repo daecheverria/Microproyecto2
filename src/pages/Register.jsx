@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "
 import { auth, db, googleProvider } from "../firebase";
 import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { async } from "@firebase/util";
-import useJuegos from "../hooks/juegos";
+import {useJuegos} from "../hooks/juegos";
 import "./Register.modules.css";
 
 
