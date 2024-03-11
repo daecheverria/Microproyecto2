@@ -2,7 +2,7 @@ import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db, googleProvider, loginWithEmailAndPassword } from "../firebase";
-import { getAdditionalUserInfo, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { getAdditionalUserInfo, onAuthStateChanged, signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
 import "./Login.modules.css";
 import { useUserContext } from "../context/User";
 
@@ -60,23 +60,64 @@ export default function Login() {
 
     
     
-        const result = await signInWithPopup(auth, googleProvider);
-        const coleccionUsuario = collection(db, "Users");
-        const querySnapshot = await getDocs(coleccionUsuario);
-        const userss = await querySnapshot.docs.map((doc) => doc.data());
-        const currentUser2 = await userss.find((user) => user.email === result.user.email);
-        if (await currentUser2) {
-          console.log("Inicio de sesión exitoso:", currentUser2.name);
-          console.log("Usuario autenticado:", result.user.displayName);
-          const [user, setUser] =  useState(currentUser2);
-          //setUser(currentUser);
-          //const navigate = useNavigate()
+        // const result = await signInWithRedirect(auth, googleProvider);
+        // const coleccionUsuario = collection(db, "Users");
+        // const querySnapshot = await getDocs(coleccionUsuario);
+        // const userss = await querySnapshot.docs.map((doc) => doc.data());
+        // const currentUser2 = await userss.find((user) => user.email === result.user.email);
+        // if (await currentUser2) {
+        //   console.log("Inicio de sesión exitoso:", currentUser2.name);
+        //   console.log("Usuario autenticado:", result.user.displayName);
+        //   const [user, setUser] =  useState(currentUser2);
+        //   //setUser(currentUser);
+        //   //const navigate = useNavigate()
           
-          // Aquí puedes realizar acciones después de iniciar sesión exitosamente
-        }else{
-          await signOut(auth)
-          alert("Usuario No esta en la base de datos, por favor registrese")
-        }
+        //   // Aquí puedes realizar acciones después de iniciar sesión exitosamente
+        // }else{
+        //   await signOut(auth)
+        //   alert("Usuario No esta en la base de datos, por favor registrese")
+        // }
+
+      // const [user, setUser] = useState(null)
+    const result = await signInWithPopup(auth, googleProvider);
+    const coleccionUsuario = collection(db, "Users");
+    const infoRelativaU = await getAdditionalUserInfo(result);
+
+    if (infoRelativaU.isNewUser) {
+
+      const fullName = result.user.displayName;
+      const namesArray = fullName.split(' ');
+
+      const firstName2 = namesArray[0];
+      const lastName2 = namesArray.slice(1).join(' ');
+
+      const email = result.user.email;
+      const emailArray = email.split('@');
+
+      const username2 = emailArray[0];
+
+      await setDoc(doc(coleccionUsuario, result.user.uid), {
+        afiliados: [],
+        email: result.user.email,
+        favoriteGame: "",
+        firstName: firstName2,
+        lastName: lastName2,
+        username: username2
+      });
+
+      // const querySnapshot = await getDocs(coleccionUsuario);
+      // const userss = await querySnapshot.docs.map((doc) => doc.data());
+      // const currentUser2 = await userss.find((user) => user.email === result.user.email);
+      //   if (await currentUser2) {
+      //     console.log("Inicio de sesión exitoso:", currentUser2.name);
+      //     console.log("Usuario autenticado:", result.user.displayName);
+      //     const [user, setUser] =  useState(currentUser2);
+
+      const [user, setUser] =  useState(result.user);
+    } else{
+    console.log("LOGIN FAILED, Try Again usuario registrado previamente");
+    }
+
         
   }
 

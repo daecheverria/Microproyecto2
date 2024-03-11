@@ -6,19 +6,20 @@ import { Link } from "react-router-dom";
 export default function App(){
     const clubes = useClubes()
     return (
-    <div   className="container">
+    <div   className="containerapp">
         <AppLayout>
-            <div style={{display:"flex", flexDirection: "column", gap:20, textAlign:"center" ,backgroundColor:"violet"}}>
+            <div style={{display:"flex", flexDirection: "column", gap:20, textAlign:"center" ,backgroundColor:"violet" , width: "auto", height:"auto"}}>
             {clubes?(
                 clubes?.map(club=>
             <div className="clubes" key={club.ID} >
                 <div>{club.nombre}</div>
                 <div>{club.descripcion}</div>
-                <div>
-                <button>
+                <div className="buttoncontainer">
+                <button className="">
                     Suscribir
-                </button>
-                <Link to={`/app/clubes/${club.ID}`}><button>
+                </button >
+                <Link to={`/app/clubes/${club.ID}`}>
+                <button className="botonver">
                     Ver
                 </button></Link>
                 

@@ -29,6 +29,10 @@ afiliados: []
 
 const juegazos = useJuegos();
 const handleSubmit = async(event) => {
+  if (username.trim() === ''|| firstName.trim() === '' || lastName.trim() === ''|| email.trim() === ''|| password.trim() === '' || favoriteGame.trim() === '' ) {
+    alert('El nombre de usuario no puede estar vacío');
+    return;
+  }
 event.preventDefault();
 // Aquí puedes agregar la lógica para enviar los datos del formulario a Firestore
 const { firstName, lastName, username, email, password, favoriteGame, afiliados} = formData;
@@ -85,18 +89,25 @@ const handleGoogleClick = async () => {
 
       const username2 = emailArray[0];
 
-      await setDoc(doc(coleccionUsuario, result.user.email), {
+      await setDoc(doc(coleccionUsuario, result.user.uid), {
         afiliados: [],
         email: result.user.email,
         favoriteGame: "",
         firstName: firstName2,
         lastName: lastName2,
-        username: username2,
-        picture: result.user.photoURL
+        username: username2
       });
+
+      // const querySnapshot = await getDocs(coleccionUsuario);
+      // const userss = await querySnapshot.docs.map((doc) => doc.data());
+      // const currentUser2 = await userss.find((user) => user.email === result.user.email);
+      //   if (await currentUser2) {
+      //     console.log("Inicio de sesión exitoso:", currentUser2.name);
+      //     console.log("Usuario autenticado:", result.user.displayName);
+      //     const [user, setUser] =  useState(currentUser2);
+
       const [user, setUser] =  useState(result.user);
     } else{
-      await signOut(auth)
     console.log("LOGIN FAILED, Try Again usuario registrado previamente");
     }
 

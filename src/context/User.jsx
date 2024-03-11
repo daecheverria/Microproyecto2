@@ -19,6 +19,7 @@ export function UserContextProvider({ children }) {
                     const userDoc = await getDoc(userRef);
                     if (userDoc.exists) {
                         setUserData(userDoc.data());
+                        console.log(userDoc.data(),"userdata se supone");
                     } else {
                         console.log("No se encontraron datos para el usuario en Firestore.");
                     }
@@ -32,6 +33,7 @@ export function UserContextProvider({ children }) {
         fetchUserData();
     }, [user]);
     console.log(userData,"hola")
+    console.log(user,"sesupone usuario")
     return (
         <UserContext.Provider
             value={{

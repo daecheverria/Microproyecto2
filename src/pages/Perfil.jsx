@@ -43,7 +43,7 @@ export default function Perfil() {
   return (
     <div className="container">
       <AppLayout>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, textAlign: "center", backgroundColor: "violet" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20, textAlign: "center", backgroundColor: "violet", width: "auto",height:"auto" }}>
           {userData ? (
             <div className="formContainerR">
               <h1 className="title">PERFIL</h1>

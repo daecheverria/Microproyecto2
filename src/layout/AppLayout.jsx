@@ -22,6 +22,9 @@ export default function AppLayout({ children }) {
                 <Link to="/app/perfil">
                     <button >Perfil</button>
                 </Link>
+                <Link to="/app">
+                    <button >Inicio</button>
+                </Link>
 
             </nav>
             <main>{children}</main>
