@@ -95,7 +95,7 @@ export default function Login() {
             <label htmlFor="password">
               <span>Ingrese su contraseña</span>
             </label>
-            <input type="password" name="password" id="password" placeholder="**" onChange={onChange} />
+            <input type="password" name="password" id="password" placeholder="*****" onChange={onChange} />
           </div>
 
           <button className="submitBtn" type="submit">Iniciar Sesión</button>
