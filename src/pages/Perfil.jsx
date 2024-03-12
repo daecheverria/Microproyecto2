@@ -53,15 +53,41 @@ export default function Perfil() {
     <div className="container">
       {userData ? (
       <AppLayout>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, textAlign: "center", backgroundColor: "violet", width: "auto",height:"auto" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20, textAlign: "center", backgroundColor: "violet", width: "auto",height:"auto",alignContent:"center"}}>
           
-            <div className="formContainerR">
-              <h1 className="title">PERFIL</h1>
+            <div className="formContainerP">
+              <h1 className="titulogame">PERFIL</h1>
+
+              <div className="descripcion" style={{display:"flex",justifyContent:"left"}}>
+                <label>Email:  </label>
+                <div>{userData.email}</div>
+              </div>
+
+              <div className="descripcion" style={{display:"flex",justifyContent:"left"}}>
+                <label>Usuario:  </label>
+                <div>{userData.username}</div>
+              </div>
+
+              <div className="descripcion" style={{display:"flex",justifyContent:"left"}}>
+                <label>Nombre:  </label>
+                <div>{userData.firstName}</div>
+              </div>
+
+              <div className="descripcion" style={{display:"flex",justifyContent:"left"}}>
+                <label>Apellido:  </label>
+                <div>{userData.lastName}</div>
+              </div>
+
+              <div className="descripcion" style={{display:"flex",justifyContent:"left"}}>
+                <label>Video Juego Favorito:  </label>
+                <div>{userData.favoriteGame}</div>
+              </div>
+              <text className="confirmar">SI desea Cambiar los datos ingrese los nuevos sino vuelva al perfil</text>
               <div className="input">
                 <label htmlFor="firstName">Nombre:</label>
                 <input type="text" id="firstName" name="firstName" value={firstName} placeholder={userData.firstName} onChange={handleFirstNameChange} />
               </div>
-
+              
               <div className="input">
                 <label htmlFor="lastName">Apellido:</label>
                 <input type="text" id="lastName" name="lastName" value={lastName} placeholder={userData.lastName} onChange={handleLastNameChange} />

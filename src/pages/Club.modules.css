@@ -67,6 +67,18 @@
 
 }
 
+.confirmar{
+  font-family: "Helvetica", sans-serif; /* Cambia la fuente según tus preferencias */
+  font-size: 19px; /* Tamaño de fuente */
+  line-height: 1.5; /* Altura de línea para mejorar la legibilidad */
+  color: #000000; /* Color del texto */
+  text-align: center; /* Alineación justificada del texto */
+  margin-bottom: 20px; /* Margen inferior para separar del contenido siguiente */
+  /* Otros estilos opcionales */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra de texto */
+
+}
+
 .genero {
     display: inline-block;
     padding: 6px 10px;

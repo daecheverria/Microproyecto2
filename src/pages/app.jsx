@@ -48,8 +48,9 @@ useEffect(() => {
       };
     return (
     <div   className="containerapp">
-        <AppLayout>
         {clubes ? (
+        <AppLayout>
+        
             <div style={{display:"flex", flexDirection: "column", gap:20, textAlign:"center" ,backgroundColor:"violet" , width: "auto", height:"auto"}}>
             {userData?(
                 clubes?.map(club=>
@@ -72,9 +73,10 @@ useEffect(() => {
                 "Cargando..."
             )}
             </div>
+            </AppLayout>
             ) : (
                 "Cargando..."
               )}
-        </AppLayout>
+       
     </div>)
 }

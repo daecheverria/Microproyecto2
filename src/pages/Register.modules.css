@@ -38,6 +38,14 @@
     width: 50%;
     height: 80vh;
   }
+  .formContainerP {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+
+    height: 90vh;
+    align-items:start;
+  }
   
   .formContainerR {
     color: #ffff;
