@@ -28,14 +28,17 @@ afiliados: []
 });
 
 const juegazos = useJuegos();
+
 const handleSubmit = async(event) => {
-  if (username.trim() === ''|| firstName.trim() === '' || lastName.trim() === ''|| email.trim() === ''|| password.trim() === '' || favoriteGame.trim() === '' ) {
-    alert('El nombre de usuario no puede estar vacío');
-    return;
-  }
-event.preventDefault();
-// Aquí puedes agregar la lógica para enviar los datos del formulario a Firestore
+  event.preventDefault();
+  
+
 const { firstName, lastName, username, email, password, favoriteGame, afiliados} = formData;
+
+if (username.trim() === ''|| firstName.trim() === '' || lastName.trim() === ''|| email.trim() === ''|| password.trim() === '' || favoriteGame.trim() === '' ) {
+  alert('Ningun renglon o seleccion puede estar vacio');
+  return;
+}
 
 try {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
