@@ -10,10 +10,8 @@ import { db } from "../firebase";
 export default function App(){
     const clubes = useClubes();
     const { user,  userData } = useContext(UserContext);
-    
-  const [firstName, setFirstName] = useState(userData?.firstName || "");
+
   const [afiliados, setClubes] = useState(userData?.afiliados || "");
-  console.log(firstName,afiliados)
 
   const handleSubscription = (clubID) => {
     if (afiliados.includes(clubID)) {
@@ -21,6 +19,7 @@ export default function App(){
     } else {
         setClubes(prevAfiliados => [...prevAfiliados, clubID]);
     }
+    window.location.reload()
 };
 
 useEffect(() => {
@@ -60,8 +59,6 @@ useEffect(() => {
                 <div className="buttoncontainer">
                 <button onClick={() => handleSubscription(club.ID)}>
                     {afiliados.includes(club.ID) ? "Desuscribir" : "Suscribir"}
-                    
-   { console.log(firstName, afiliados)}
                 </button >
                 <Link className="buttonlink" to={`/app/clubes/${club.ID}`}>
                 <button className="botonver">

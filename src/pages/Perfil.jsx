@@ -43,6 +43,7 @@ export default function Perfil() {
         lastName,
         favoriteGame
       });
+      window.location.reload()
       console.log("Datos actualizados correctamente.");
     } catch (error) {
       console.error("Error al actualizar datos del usuario:", error);
