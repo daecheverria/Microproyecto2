@@ -1,10 +1,9 @@
-import { Link, Navigate, useNavigate} from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, useNavigate} from "react-router-dom";
+import { useState } from "react";
 import { createUserWithEmailAndPassword, getAdditionalUserInfo, signInWithPopup, signOut, updateProfile } from "firebase/auth"
 
 import { auth, db, googleProvider } from "../firebase";
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
-import { async } from "@firebase/util";
+import { collection, setDoc, doc } from "firebase/firestore";
 import {useJuegos} from "../hooks/juegos";
 import "./Register.modules.css";
 import { useUserContext } from "../context/User";
@@ -71,10 +70,6 @@ setFormData((prevData) => ({
 };
 
 const handleGoogleClick = async () => {
-//await signInWithPopup(auth, googleProvider);
-//Navigate('/app');
-
-   // const [user, setUser] = useState(null)
     const result = await signInWithPopup(auth, googleProvider);
     const coleccionUsuario = collection(db, "Users");
     const infoRelativaU = await getAdditionalUserInfo(result);
@@ -101,13 +96,6 @@ const handleGoogleClick = async () => {
         username: username2
       });
 
-      // const querySnapshot = await getDocs(coleccionUsuario);
-      // const userss = await querySnapshot.docs.map((doc) => doc.data());
-      // const currentUser2 = await userss.find((user) => user.email === result.user.email);
-      //   if (await currentUser2) {
-      //     console.log("Inicio de sesión exitoso:", currentUser2.name);
-      //     console.log("Usuario autenticado:", result.user.displayName);
-      //     const [user, setUser] =  useState(currentUser2);
 
       const [user, setUser] =  useState(result.user);
     } else{
@@ -160,7 +148,7 @@ return (
 
       <button className="submitBtn" type="submit">Registrarse</button>
       <button className="googleBtn" type="button" onClick={handleGoogleClick}>Registrarse con Google</button>
-      <Link className="redirect" to={"/Login"}>
+      <Link className="redirect" to={"/"}>
                 ¿Ya tines una cuenta? {" "}
                     <span className="txt">Iniciar Sesión</span>
                 </Link>

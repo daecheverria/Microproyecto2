@@ -1,8 +1,8 @@
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
-import { useState, useEffect } from "react";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db, googleProvider, loginWithEmailAndPassword } from "../firebase";
-import { getAdditionalUserInfo, onAuthStateChanged, signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
+import { getAdditionalUserInfo, signInWithPopup } from "firebase/auth";
 import "./Login.modules.css";
 import { useUserContext } from "../context/User";
 
@@ -41,42 +41,8 @@ export default function Login() {
   
 
   async function handleClick() {
-    //const [user, setUser] = useState(null)
-    //const result = await signInWithPopup(auth, googleProvider);
-    //const coleccionUsuario = collection(db, "Users");
-    //const infoRelativaU = await getAdditionalUserInfo(result);
-
-    // if (infoRelativaU.isNewUser) {
-    //   await setDoc(doc(coleccionUsuario, result.user.email), {
-    //     email: result.user.email,
-    //     name: result.user.displayName,
-    //     picture: result.user.photoURL,
-    //   });
-    // } else{
-    // console.log("LOGIN FAILED, Try Again");
-    // }
 
     
-    
-        // const result = await signInWithRedirect(auth, googleProvider);
-        // const coleccionUsuario = collection(db, "Users");
-        // const querySnapshot = await getDocs(coleccionUsuario);
-        // const userss = await querySnapshot.docs.map((doc) => doc.data());
-        // const currentUser2 = await userss.find((user) => user.email === result.user.email);
-        // if (await currentUser2) {
-        //   console.log("Inicio de sesión exitoso:", currentUser2.name);
-        //   console.log("Usuario autenticado:", result.user.displayName);
-        //   const [user, setUser] =  useState(currentUser2);
-        //   //setUser(currentUser);
-        //   //const navigate = useNavigate()
-          
-        //   // Aquí puedes realizar acciones después de iniciar sesión exitosamente
-        // }else{
-        //   await signOut(auth)
-        //   alert("Usuario No esta en la base de datos, por favor registrese")
-        // }
-
-      // const [user, setUser] = useState(null)
     const result = await signInWithPopup(auth, googleProvider);
     const coleccionUsuario = collection(db, "Users");
     const infoRelativaU = await getAdditionalUserInfo(result);
@@ -103,14 +69,6 @@ export default function Login() {
         username: username2
       });
 
-      // const querySnapshot = await getDocs(coleccionUsuario);
-      // const userss = await querySnapshot.docs.map((doc) => doc.data());
-      // const currentUser2 = await userss.find((user) => user.email === result.user.email);
-      //   if (await currentUser2) {
-      //     console.log("Inicio de sesión exitoso:", currentUser2.name);
-      //     console.log("Usuario autenticado:", result.user.displayName);
-      //     const [user, setUser] =  useState(currentUser2);
-
       const [user, setUser] =  useState(result.user);
     } else{
     console.log("LOGIN FAILED, Try Again usuario registrado previamente");
@@ -119,19 +77,6 @@ export default function Login() {
         
   }
 
-  // async function cerrarSesion() {
-  //   await signOut(auth);
-  //   setUser(null);
-  // }
-
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     setUser(user);
-  //   });
-
-  //   Devuelve una función de limpieza para cancelar la suscripción al cambiar de componente o desmontar
-  //   return () => unsubscribe();
-  // }, []);
 
   return (
     <div className="container">
@@ -162,7 +107,6 @@ export default function Login() {
           <Link className="redirect" to={"/Register"}>
             ¿Aún no tienes una cuenta? <span>Regístrate</span>
           </Link>
-          {/* <button onClick={cerrarSesion}>Cerrar sesión</button> */}
         </div>
         
       </form>

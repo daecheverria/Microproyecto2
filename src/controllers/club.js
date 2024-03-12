@@ -7,7 +7,6 @@ export async function getClubes(){
     const clubDocs = await getDocs(clubCollection)
     const clubs = await Promise.all(clubDocs.docs.map(async (doc) => {
         const clubData = doc.data();
-        // Mapear los IDs de videojuegos y obtener los objetos completos
         const videojuegosCompletos = await Promise.all(clubData.videojuegos.map(async (id) => {
             return await getJuego(id);
         }));

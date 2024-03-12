@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useAuthState } from 'react-firebase-hooks/auth'; 
-import { auth, db } from "../firebase";
-import { doc, getDoc, updateDoc } from "@firebase/firestore";
+import { useContext, useEffect, useState } from "react";
+import { db } from "../firebase";
+import { doc, updateDoc } from "@firebase/firestore";
 import { UserContext } from '../context/User';
 import AppLayout from '../layout/AppLayout';
 import { useJuegos } from '../hooks/juegos';

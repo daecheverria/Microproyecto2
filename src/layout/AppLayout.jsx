@@ -25,12 +25,12 @@ export default function AppLayout({ children }) {
     const navigate = useNavigate();
     const  { user } = useUserContext();
   if (!user || user === undefined || user === null) {
-    navigate("/Login")
+    navigate("/")
   }
     return ((
         <div className="layaout" >
             <nav style={{display:"flex",justifyContent:"space-between"}}>
-                <Link to="/login">
+                <Link to="/">
                     <button onClick={cerrarSesion}>Cerrar sesion</button>
                 </Link>
                 <Link to="/app/perfil">
